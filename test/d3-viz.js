@@ -7,9 +7,11 @@ function getMaleApplied(data){
 }
 
 var dataset = d3.json("admissions.json").then(function(data){ console.log(data)});
-var dataset = [80, 100, 56, 120, 180, 30, 40, 120, 160];
+var data = [18147, 19838, 20566, 21590, 21725, 22332, 25097, 28758, 31992, 34618, 37009, 39779, 41583, 45636];
 var jj = d3.json('admissions.json');
 var fMA = jj.then(function(data) { return getMaleApplied(data);})
+
+
 
 var svgWidth = 500;
 var svgHeight = 300;
@@ -19,12 +21,15 @@ var svg = d3.select('svg')
  .attr("width", svgWidth)
  .attr("height", svgHeight);
 
+ var max = Math.max.apply(null, data)
+ var dataset = data.map(function(x) { return (x / max) * svgHeight})
+
 var barChart = svg.selectAll('rect')
   .data(dataset)
   .enter()
   .append("rect")
   .attr("y", function(d) {
-    return svgHeight - d
+    return svgHeight - d;
   })
   .attr("height", function(d) {
     return d;
